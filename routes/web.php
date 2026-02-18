@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PembelianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class,'index']);
+// Route::middleware('auth')->post('/beli/{id}',[PembelianController::class,'beli']);
+
+
+Route::post('/beli/{id}', [PembelianController::class, 'beli'])->name('beli.tiket');
+Route::get('/pembelian/sukses/{kode}', [PembelianController::class, 'sukses'])->name('pembelian.sukses');
+Route::post('/midtrans/callback', [\App\Http\Controllers\MidtransController::class, 'callback']);
+Route::get('/tiket/print/{kode}', [PembelianController::class, 'print'])->name('tiket.print');
